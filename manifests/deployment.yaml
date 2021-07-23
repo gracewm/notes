@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: notes    
+  name: notes
+  namespace: demo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: notes      
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: notes        
+    spec:
+      containers:
+      - image: njsgrace/notes:v.1.0.0
+        imagePullPolicy: IfNotPresent
+        name: notes
+        ports:
+        - containerPort: 6111
+          protocol: TCP
+
+       
